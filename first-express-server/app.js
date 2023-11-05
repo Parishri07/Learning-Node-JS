@@ -1,17 +1,15 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use('/add-product', (req, res, next) =>{
-    console.log("In middleware");
-    res.send('<h1>This is Add Products Page</h1>');
-    // next(); //Allows the request to continue in the next middleware in line
-})
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
-app.use('/', (req, res, next) =>{
-    console.log("In another middleware");
-    res.send('<h1>Hello.. Welcome to my express server</h1>');
-    //you travel form middleware to middleware using next() function. At the end of the last middleware you send a response
-})
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(shopRoutes);
+
+app.use(adminRoutes);
 
 app.listen(3000);
