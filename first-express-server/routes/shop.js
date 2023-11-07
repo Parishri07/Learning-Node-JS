@@ -1,12 +1,14 @@
 const path = require('path');
 
 const express = require('express');
+const adminData = require('./admin');
 
 const rootDir = require('../utils/path');
 
 const routes = express.Router();
 
 routes.get('/', (req, res, next) =>{
+  console.log(adminData.products);
   res.sendFile(path.join(rootDir, 'views', 'shop.html'));
   // '/views/shop.html' is not a valid path because the '/' at the beginning searches the folder in our operating system so we need to add path to our project before searching for views folder 
 })
