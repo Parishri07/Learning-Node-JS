@@ -5,13 +5,13 @@ const path = require('path');
 
 const app = express();
 
-const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public'))); //access files statically
 
-app.use('/admin',adminRoutes); //we are filtering that all paths starting from /admin should be checked in adminRoutes
+app.use('/admin',adminData.routes); //we are filtering that all paths starting from /admin should be checked in adminRoutes
 app.use(shopRoutes);
 
 app.use((req, res, next) =>{
