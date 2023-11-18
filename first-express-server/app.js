@@ -11,17 +11,19 @@ const app = express();
 // app.set('view engine', 'pug');
 //for pug we dont need to install any additional packages and we use app.set because pug is a built in engine
 
-app.engine(
-    'hbs', 
-    expressHbs({
-        layoutsDir: 'views/layouts/', 
-        defaultLayout: 'main-layout',
-        extname: 'hbs'
-    })
-);
-app.set('view engine', 'hbs');
+// app.engine(
+//     'hbs', 
+//     expressHbs({
+//         layoutsDir: 'views/layouts/', 
+//         defaultLayout: 'main-layout',
+//         extname: 'hbs'
+//     })
+// );
+// app.set('view engine', 'hbs');
 //for express handlers we need to install the packages separately by   npm install --save express-handlebars@3.0 and require it also since it is not built in we use app.engine before app.set
 //for handlebars page extension will be as we have specified above in app engine for this case it is hbs
+
+app.set('view engine', 'ejs');
 
 app.set('views', 'views');
 
