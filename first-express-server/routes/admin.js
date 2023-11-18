@@ -21,6 +21,7 @@ router.get('/add-product', (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
     // next(); //Allows the request to continue in the next middleware in line
 })
+// res.render function is used to insert a template. First it looks for the view engine and then inserts the file name given as the first parameter as the template
 
 // /admin/add-product => POST
 router.post('/add-product', (req, res, next) => {
