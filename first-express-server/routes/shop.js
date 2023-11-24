@@ -1,26 +1,13 @@
 const path = require('path');
 
 const express = require('express');
-const adminData = require('./admin');
 
-const rootDir = require('../utils/path');
+// const rootDir = require('../utils/path');
+
+const productControllers = require('../controllers/products');
 
 const routes = express.Router();
 
-routes.get('/', (req, res, next) => {
-  const products = adminData.products;
-  res.render('shop', { 
-    prods: products, 
-    pageTitle: 'Shop', 
-    path: '/', 
-    hasProducts: products.length > 0,
-    activeShop: true,
-    productCSS: true 
-  });
-  // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-})
-// '/views/shop.html' is not a valid path because the '/' at the beginning searches the folder in our operating system so we need to add path to our project before searching for views folder 
-//you travel from middleware to middleware using next() function. At the end of the last middleware you send a response, because you cannot send two res.send functions
-//get function checks for the exact path also
+routes.get('/', productControllers.shopPage);
 
 module.exports = routes;
