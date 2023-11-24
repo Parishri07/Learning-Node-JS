@@ -28,23 +28,21 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 
-const adminData = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+
+const errorController = require('./controllers/error.js');
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
+// If extended is set to false, the values are represented as strings or arrays. If extended is set to true, the values can be any type and are represented as objects.
 app.use(express.static(path.join(__dirname, 'public'))); //access files statically
 
 
-app.use('/admin', adminData.routes); //we are filtering that all paths starting from /admin should be checked in adminRoutes
+app.use('/admin', adminRoutes); //we are filtering that all paths starting from /admin should be checked in adminRoutes
 app.use(shopRoutes);
 
 
-app.use((req, res, next) => {
-    res.status(404).render('404', { pageTitle: 'Page Not Found' });
-    //the way you pass data doesnot change with engine
-    //res.status(404).sendFile(path.join(__dirname, 'views', 'error-page.html')); 
-})
-
+app.use(errorController.get404);
 
 app.listen(3000);
