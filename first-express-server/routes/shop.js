@@ -4,10 +4,16 @@ const express = require('express');
 
 // const rootDir = require('../utils/path');
 
-const productControllers = require('../controllers/products');
+const shopControllers = require('../controllers/shop');
 
-const routes = express.Router();
+const router = express.Router();
 
-routes.get('/', productControllers.shopPage);
+router.get('/', shopControllers.getIndex);
 
-module.exports = routes;
+router.get('/products', shopControllers.getProducts);
+
+router.get('/cart', shopControllers.getCart);
+
+router.get('/checkout', shopControllers.getCheckout); 
+
+module.exports = router;
