@@ -12,12 +12,12 @@
                                 <!-- '=' adds the HTML content after preforming escaping -->
                             </header>
                             <div class="card__image">
-                                <img src="https://assets.architecturaldigest.in/photos/624c2654cf7483eb90e638d6/16:9/w_2560%2Cc_limit/Books-1.jpg"
-                                        alt="A Book">
+                                <img src="<%= product.imageUrl %>" alt="A Book">
+                                <!-- https://assets.architecturaldigest.in/photos/624c2654cf7483eb90e638d6/16:9/w_2560%2Cc_limit/Books-1.jpg -->
                             </div>
                             <div class="card__content">
-                                <h2 class="product__price">$19.99</h2>
-                                <p class="product__description">A very interesting book about so many even more interesting things!</p>
+                                <h2 class="product__price">$<%= product.price %></h2>
+                                <p class="product__description"><%= product.description %></p>
                             </div>
                             <div class="card__actions">
                                 <button class="btn">Add to Cart</button>
