@@ -13,15 +13,15 @@
                             </header>
                             <div class="card__image">
                                 <img src="<%= product.imageUrl %>" alt="A Book">
-                                <!-- https://assets.architecturaldigest.in/photos/624c2654cf7483eb90e638d6/16:9/w_2560%2Cc_limit/Books-1.jpg -->
                             </div>
                             <div class="card__content">
                                 <h2 class="product__price">$<%= product.price %></h2>
                                 <p class="product__description"><%= product.description %></p>
                             </div>
                             <div class="card__actions">
-                                <form action="/add-to-cart" method="POST"></form>
-                                <button class="btn">Add to Cart</button>
+                                <a href="/products/<%= product.id %>" class="btn">Details</a>
+                                <%- include('../includes/add-to-cart.ejs', {product:product}) %>
+                                 <!-- the local variable 'product' is not accessible in includes so we pass it  -->
                             </div>
                         </article>
                         <% } %>
