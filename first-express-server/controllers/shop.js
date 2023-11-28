@@ -18,15 +18,15 @@ exports.getProducts = (req, res, next) => {
 //you travel from middleware to middleware using next() function. At the end of the last middleware you send a response, because you cannot send two res.send functions
 //get function checks for the exact path also
 
-exports.getProduct = (req, res, next) =>{
-   const prodId = req.params.productId;
-   Product.findById(prodId, product => {
+exports.getProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  Product.findById(prodId, product => {
     res.render('shop/product-detail', {
-        product: product,
-        pageTitle: product.title,
-        path: '/products'
+      product: product,
+      pageTitle: product.title,
+      path: '/products'
     });
-   })
+  })
 }
 
 exports.getIndex = (req, res, next) => {
@@ -41,16 +41,19 @@ exports.getIndex = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
+  Cart.fetchCart(cart => {
     res.render('shop/cart', {
+      cart: cart,
       path: '/cart',
       pageTitle: 'Your Cart'
     });
+  });
 }
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findById(prodId, product => {
-     Cart.addProduct(prodId, product.price);
+    Cart.addProduct(prodId, product.price);
   });
   res.redirect('/cart');
 }
