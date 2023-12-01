@@ -23,6 +23,7 @@ module.exports = class Product {
     }
 
     save() {
+        this.id = Math.random().toString();
         getProductsFromFile( products => {
             products.push(this);
             fs.writeFile(p, JSON.stringify(products), (err) => {
@@ -35,4 +36,13 @@ module.exports = class Product {
        getProductsFromFile(cb);
     }
     // static function can be called directly from the class without creating an instance of the class, to display all the elements of the products array we dont need to make a dummy object then call this function
+
+    static findById(id, cb){
+       getProductsFromFile(products => {
+        const product = products.find(p => {
+            return p.id === id;
+        });
+        cb(product);
+       })
+    }
 };
