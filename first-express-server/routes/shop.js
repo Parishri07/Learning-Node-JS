@@ -12,7 +12,15 @@ router.get('/', shopControllers.getIndex);
 
 router.get('/products', shopControllers.getProducts);
 
+// router.get('/products/delete');
+
+router.get('/products/:productId', shopControllers.getProduct);
+//this enables us to extract and use the productId  
+//: enables us to write a dynamic segment
+
 router.get('/cart', shopControllers.getCart);
+
+router.post('/cart', shopControllers.postCart);
 
 router.get('/orders', shopControllers.getOrders);
 
