@@ -59,7 +59,7 @@ exports.postCart = (req, res, next) => {
 }
 
 exports.getOrders = (req, res, next) => {
-  res.render('shop/cart', {
+  res.render('shop/orders', {
     path: '/orders',
     pageTitle: 'Your Orders'
   })
