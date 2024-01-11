@@ -46,7 +46,21 @@ module.exports = class Cart {
         })
     }
 
-    static fetchCart(cb){
+    static getCart(cb){
         getProductsFromCart(cb);
+    }
+
+    static deleteProduct(id, productPrice) {
+        getProductsFromCart(cart => {
+            const updatedCart = { ...cart };
+            const product = updatedCart.products.find(prod => prod.id === id);
+            const productQty = product.qty; 
+            updatedCart.products = updatedCart.products.filter(prod => prod.id !== id);
+            updatedCart.totalPrice -= productQty * productPrice; 
+
+            fs.writeFile(p, JSON.stringify(updatedCart), err =>{
+                console.log(err);
+            });
+        })
     }
 }
