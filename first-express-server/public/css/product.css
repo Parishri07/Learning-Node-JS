@@ -22,4 +22,9 @@
 
 .product__description {
     text-align: center;
+    padding-bottom:0.5rem;
+}
+
+.product__qty{
+    text-align: center; 
 }
