@@ -46,7 +46,10 @@ module.exports = class Product {
 
     static deletebyId(id, cb){
         getProductsFromFile(products => {
-           const product = products.find(prod => prod.id === id); 
+           const product = products.find(prod => prod.id === id);
+           if(!product){
+            return;
+           } 
            const updatedProducts = products.filter(prod => prod.id !== id);
            fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
             if(!err){
@@ -55,19 +58,20 @@ module.exports = class Product {
            }) 
         })
         cb();
-    }
+    };
 
     static fetchAll(cb) {
         getProductsFromFile(cb);
-    }
+    };
     // static function can be called directly from the class without creating an instance of the class, to display all the elements of the products array we dont need to make a dummy object then call this function
 
     static findById(id, cb) {
         getProductsFromFile(products => {
-            const product = products.find(p => {
-                return p.id === id;
-            });
+            const product = products.find(p => p.id.toString() === id.toString());
+            if (!product) {
+                return cb(null);
+            }
             cb(product);
-        })
-    }
+        });
+    };
 };
