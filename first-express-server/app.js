@@ -5,6 +5,9 @@ const expressHbs = require('express-handlebars');
 
 const path = require('path');
 
+const errorController = require('./controllers/error.js');
+// const db = require('./utils/database');
+
 const app = express();
 
 //Allows us to set a global configuration value and we could read them from app.get
@@ -31,8 +34,13 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-const errorController = require('./controllers/error.js');
-
+/* db.execute('SELECT * FROM products')
+   .then((value) => {
+    console.log(value);
+   })
+   .catch((err) => {
+    console.log(err);
+   }); */
 
 app.use(bodyParser.urlencoded({ extended: false }));
 // If extended is set to false, the values are represented as strings or arrays. If extended is set to true, the values can be any type and are represented as objects.
