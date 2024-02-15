@@ -129,3 +129,56 @@ exports.getProduct = (req, res, next) => {
     .catch(err => console.log(err));
   }; 
 */
+
+/* using sequelize
+
+exports.getIndex = (req, res, next) => {
+  Product.findAll()
+    .then(products => {
+      res.render('shop/index', {
+       prods: products,
+       pageTitle: 'Shop',
+       path: '/'
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.getProducts = (req, res, next) => {
+  Product.findAll()
+    .then(products => {
+      res.render('shop/product-list', {
+       prods: products,
+       pageTitle: 'All Products',
+       path: '/products'
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.getProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  
+  //either of the following two ways can be used:
+  Product.findAll({where: { id: prod.id } })
+  .then(products => {
+      res.render('shop/product-detail', {
+       product: products[0],
+       pageTitle: products[0].title,
+       path: '/products'
+      });
+    })
+  .catch(err => console.log(err));
+  //findAll returns an array
+
+  Product.findById(prodId)
+    .then(product => {
+      res.render('shop/product-detail', {
+       product: product,
+       pageTitle: product.title,
+       path: '/products'
+      });
+    })
+  .catch(err => console.log(err));
+};
+*/
