@@ -6,7 +6,11 @@ const expressHbs = require('express-handlebars');
 const path = require('path');
 
 const errorController = require('./controllers/error.js');
-// const db = require('./utils/database');
+// const sequelize = require('./utils/database');
+const Product = require('./models/product.js');
+const User = require('./models/user.js');
+const Cart = require('./models/cart.js');
+const CartItem = require('./models/cart-item.js');
 
 const app = express();
 
@@ -46,6 +50,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // If extended is set to false, the values are represented as strings or arrays. If extended is set to true, the values can be any type and are represented as objects.
 app.use(express.static(path.join(__dirname, 'public'))); //access files statically
 
+// app.use((req, res, next) => {
+//   User.findById(1)
+//    .then(user => {
+//     req.user = user;
+//     next();
+//    })
+//    .catch(err => console.log(err));
+// });
 
 app.use('/admin', adminRoutes); //we are filtering that all paths starting from /admin should be checked in adminRoutes
 app.use(shopRoutes);
@@ -53,11 +65,40 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-// sequelize.sync()
+//Associations or relationships
+// Product.belongsTo(User, {
+//   constraints: true,
+//   onDelete: 'CASCADE'
+// });
+// User.hasMany(Product);
+//product will have a userId column
+
+User.hasOne(Cart);
+Cart.belongsTo(User);
+//Cart will have a userId column
+
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
+
+
+// sequelize
+//   .sync() 
 //   .then((result) => {
-//      app.listen(3000);
+//     return User.findById(1)
+//   })
+//   .then(user => {
+//     if(!user){
+//       return User.create({ name:'Kartik Aaryan', email: 'jfrvuiose.com'})
+//     }
+//     return user;
+//   })
+//   .then(user => {
+//     return user.createCart();
+//   })
+//   .then(cart => {
+//     app.listen(3000);
 //   })
 //   .catch(err => console.log(err));
 // it syncs the models to the database by creating appropiate tables
-
+// .sync({ force: true }) -> here it deletes the existing table if any and creates new one 
 app.listen(3000);
