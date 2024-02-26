@@ -11,6 +11,8 @@
                             <header class="card__header">
                                 <h1 class="product__title"><%= p.productData.title%></h1>
                                 <!-- '=' adds the HTML content after preforming escaping -->    
+                                <!-- when we use sequelize -->
+                                <!-- <h1 class="product__title"><%= p.title%></h1> -->
                             </header>
                             <div class="card__image">
                                 <img src="<%= p.productData.imageUrl %>" alt="A Book">
@@ -19,6 +21,9 @@
                                 <h2 class="product__price">$<%= p.productData.price %></h2>
                                 <p class="product__description"><%= p.productData.description %></p>
                                 <p class="product__qty">Quantity: <%= p.qty %></p>
+                                <!-- <h2 class="product__price">$<%= p.price %></h2>
+                                <p class="product__description"><%= p.description %></p>
+                                <p class="product__qty">Quantity: <%= p.cartItem.qty %></p> -->
                             </div>
                             <div class="card__actions">
                             <form action="/cart-delete-item" method="POST">
@@ -30,6 +35,9 @@
                     <% } %>
                     <!-- <p>Total price: <%= cart.totalPrice %></p> -->
                 </div>
+                <form action="/create-order" method="POST">
+                    <button class="btn" type="submit">Order Now!</button>
+                </form>
             <% } else {%>
                 <h1>No Products Found!</h1>
             <% } %>
