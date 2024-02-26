@@ -207,6 +207,7 @@ exports.getCart = (req, res, next) => {
 exports.postCart = (req, res, next) => {
   let prodId = req.body.productId;
   let fetchedCart;
+  let newQuantity = 1;
   req.user
    .getCart()
    .then(cart => {
@@ -215,22 +216,68 @@ exports.postCart = (req, res, next) => {
    })
    .then(products => {
      let product;
-     if(product.length > 0){
+     if(products.length > 0){
       product = products[0];
      }
-     let newQuantity = 1;
      if(product) {
-
+       const oldQuantity = product.cartItem.quantity;
+       newQuantity = oldQuantity + 1;
+       return product;
      }
-     return Product.findById(prodId)
-        .then(product => {
-           return fetchedCart.addProduct(product, { through: { quantity: newQuantity } });
-        })
-        .catch(err => console.log(err));
+     //finding the product in Product table not in cart
+     return Product.findById(prodId);
+   })
+   .then(product => {
+      return fetchedCart.addProduct(product, { 
+        through: { quantity: newQuantity } 
+      });
    })
    .then(() => {
       res.redirect('/cart');
    })
    .catch(err => console.log(err));
 };
+
+exports.postCartDeleteProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  req.user
+   .getCart()
+   .then(cart => {
+    return cart.getProducts({ where: {id: prodId }});
+   })
+   .then(products => {
+    let product;
+    if(products.length > 0){
+      product = products[0];
+    }
+    product.cartItem.destroy();
+   })
+   .then(result => {
+     res.redirect('/cart');
+   })
+   .catch(err => console.log(err));
+};
+
+exports.postOrder = (req, res, next) => {
+  req.user
+   .getCart()
+   .then(cart => {
+     return cart.getProducts();
+   })
+   .then(products => {
+     req.user.createOrder()
+      .then(order => {
+        return order.addProducts(
+          products.map(product => {
+          product.orderItem = { quantity: product.cartItem.quantity };
+          return product;
+          })
+        );
+      })
+   })
+   .then(result => {
+    res.redirect('/orders');
+   })
+   .catch(err => console.log(err));
+} 
 */
