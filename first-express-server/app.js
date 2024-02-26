@@ -1,16 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const expressHbs = require('express-handlebars');
+// const expressHbs = require('express-handlebars');
 
 const path = require('path');
 
 const errorController = require('./controllers/error.js');
 // const sequelize = require('./utils/database');
-const Product = require('./models/product.js');
-const User = require('./models/user.js');
-const Cart = require('./models/cart.js');
-const CartItem = require('./models/cart-item.js');
+// const Product = require('./models/product.js');
+// const User = require('./models/user.js');
+// const Cart = require('./models/cart.js');
+// const CartItem = require('./models/cart-item.js');
+// const Order = require('./models/order.js');
+// const OrderItem = require('./models/order-item.js');
 
 const app = express();
 
@@ -34,11 +36,11 @@ app.set('view engine', 'ejs');
 
 app.set('views', 'views');
 
-
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-/* db.execute('SELECT * FROM products')
+/* // const db = require('./utils/database'); 
+ db.execute('SELECT * FROM products')
    .then((value) => {
     console.log(value);
    })
@@ -62,7 +64,6 @@ app.use(express.static(path.join(__dirname, 'public'))); //access files statical
 app.use('/admin', adminRoutes); //we are filtering that all paths starting from /admin should be checked in adminRoutes
 app.use(shopRoutes);
 
-
 app.use(errorController.get404);
 
 //Associations or relationships
@@ -73,13 +74,16 @@ app.use(errorController.get404);
 // User.hasMany(Product);
 //product will have a userId column
 
-User.hasOne(Cart);
-Cart.belongsTo(User);
+// User.hasOne(Cart);
+// Cart.belongsTo(User);
 //Cart will have a userId column
 
-Cart.belongsToMany(Product, { through: CartItem });
-Product.belongsToMany(Cart, { through: CartItem });
+// Cart.belongsToMany(Product, { through: CartItem });
+// Product.belongsToMany(Cart, { through: CartItem });
 
+// Order.belongsTo(User);
+// User.hasMany(Order);
+// Order.belongsToMany(Product, { through: OrderItem });
 
 // sequelize
 //   .sync() 
@@ -101,4 +105,3 @@ Product.belongsToMany(Cart, { through: CartItem });
 //   .catch(err => console.log(err));
 // it syncs the models to the database by creating appropiate tables
 // .sync({ force: true }) -> here it deletes the existing table if any and creates new one 
-app.listen(3000);
